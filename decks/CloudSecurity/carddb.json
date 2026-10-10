@@ -1,0 +1,254 @@
+{
+    "title": "Cloud Security Expansion",
+    "revdate": "05-12-2023",
+    "link": "https://www.antisyphontraining.com/",
+    "data" : [
+        {
+            "name" : "Create Inbox Rules to Forward Emails",
+            "image" : "decks/CloudSecurity/BNB_CARDS_CloudDeck_C2_1.png",
+            "type" : "c2",
+            "id" : "052",
+            "details" : "<li><a target=\"_blank\" href=\"https://github.com/sensepost/ruler\">https://github.com/sensepost/ruler</a></li><li><a target=\"_blank\" href=\"https://github.com/OfficeDev/Outlook-Add-in-ForwardEmail\">https://github.com/OfficeDev/Outlook-Add-in-ForwardEmail</a></li>"
+        },
+        {
+            "name" : "Malicious Serverless Function",
+            "image" : "decks/CloudSecurity/BNB_CARDS_CloudDeck_C2_2.png",
+            "type" : "c2",
+            "id" : "053",
+            "details" : ""
+        },{
+            "name" : "Virtual Machine Access via Web Portal",
+            "image" : "decks/CloudSecurity/BNB_CARDS_CloudDeck_C2_3.png",
+            "type" : "c2",
+            "id" : "054",
+            "details" : ""
+        },
+        {
+            "name" : "Cloud Service Password Spray",
+            "image" : "decks/CloudSecurity/BNB_CARDS_CloudDeck_IC_1.png",
+            "type" : "initial",
+            "id" : "055",
+            "details" : "<li><a target=\"_blank\" href=\"https://github.com/byt3bl33d3r/SprayingToolkit\">https://github.com/byt3bl33d3r/SprayingToolkit</a></li><li><a target=\"_blank\" href=\"https://github.com/vanhauser-thc/thc-hydra\">https://github.com/vanhauser-thc/thc-hydra</a></li><li><a target=\"_blank\" href=\"https://github.com/dafthack/MailSniper\">https://github.com/dafthack/MailSniper</a></li><li><a target=\"_blank\" href=\"https://github.com/arch4ngel/BruteLoops\">https://github.com/arch4ngel/BruteLoops</a></li><li><a target=\"_blank\" href=\"https://github.com/dafthack/MSOLSpray\">https://github.com/dafthack/MSOLSpray</a></li><li><a target=\"_blank\" href=\"https://github.com/ustayready/fireprox\">https://github.com/ustayready/fireprox</a></li>"
+        },
+        {
+            "name" : "Cloud Service Provider Vulnerability",
+            "image" : "decks/CloudSecurity/BNB_CARDS_CloudDeck_IC_2.png",
+            "type" : "initial",
+            "id" : "056",
+            "details" : "<li><a target=\"_blank\" href=\"https://threatpost.com/azure-zero-day-supply-chain/169508/\">https://threatpost.com/azure-zero-day-supply-chain/169508/</a></li><li><a target=\"_blank\" href=\"https://orca.security/resources/blog/aws-cloudformation-vulnerability/\">https://orca.security/resources/blog/aws-cloudformation-vulnerability/</a></li>"
+        },
+        {
+            "name" : "Credentials Posted Publicly in a Code Repository",
+            "image" : "decks/CloudSecurity/BNB_CARDS_CloudDeck_IC_3.png",
+            "type" : "initial",
+            "id" : "057",
+            "details" : "<li><a target=\"_blank\" href=\"https://github.com/zricethezav/gitleaks\">https://github.com/zricethezav/gitleaks</a></li><li><a target=\"_blank\" href=\"https://github.com/trufflesecurity/truffleHog\">https://github.com/trufflesecurity/truffleHog</a></li><li><a target=\"_blank\" href=\"https://github.com/michenriksen/gitrob\">https://github.com/michenriksen/gitrob</a></li>"
+        },
+        {
+            "name" : "Malicious OAuth Applciation",
+            "image" : "decks/CloudSecurity/BNB_CARDS_CloudDeck_IC_4.png",
+            "type" : "initial",
+            "id" : "058",
+            "details" : "<li><a target=\"_blank\" href=\"https://github.com/mdsecactivebreach/o365-attack-toolkit\">https://github.com/mdsecactivebreach/o365-attack-toolkit</a></li><li><a target=\"_blank\" href=\"https://threatpost.com/oauth-phishing-microsoft-o365-attacks/159713/\">https://threatpost.com/oauth-phishing-microsoft-o365-attacks/159713/</a></li>"
+        },
+        {
+            "name" : "Misconfigured MFA",
+            "image" : "decks/CloudSecurity/BNB_CARDS_CloudDeck_IC_5.png",
+            "type" : "initial",
+            "id" : "059",
+            "details" : "<li><a target=\"_blank\" href=\"https://github.com/dafthack/MFASweep\">https://github.com/dafthack/MFASweep</a></li><li><a target=\"_blank\" href=\"https://www.blackhillsinfosec.com/exploiting-mfa-inconsistencies-on-microsoft-services/\">https://www.blackhillsinfosec.com/exploiting-mfa-inconsistencies-on-microsoft-services/</a></li>"
+        },
+        {
+            "name" : "Public Storage Bucket Exposed",
+            "image" : "decks/CloudSecurity/BNB_CARDS_CloudDeck_IC_6.png",
+            "type" : "initial",
+            "id" : "060",
+            "details" : "<li><a target=\"_blank\" href=\"https://github.com/jordanpotti/AWSBucketDump\">https://github.com/jordanpotti/AWSBucketDump</a></li><li><a target=\"_blank\" href=\"https://github.com/initstring/cloud_enum\">https://github.com/initstring/cloud_enum</a></li><li><a target=\"_blank\" href=\"https://github.com/NetSPI/MicroBurst\">https://github.com/NetSPI/MicroBurst</a></li>"
+        },
+        {
+            "name" : "Out-of-Band Phish",
+            "image" : "decks/CloudSecurity/BNB_CARDS_CloudDeck_IC_7.png",
+            "type" : "initial",
+            "id" : "061",
+            "details" : "<li><a target=\"_blank\" href=\"https://github.com/kgretzky/evilginx2\">https://github.com/kgretzky/evilginx2</a></li><li><a target=\"_blank\" href=\"https://github.com/drk1wi/Modlishka\">https://github.com/drk1wi/Modlishka</a></li><li><a target=\"_blank\" href=\"https://www.blackhillsinfosec.com/how-to-phish-for-geniuses\">https://www.blackhillsinfosec.com/how-to-phish-for-geniuses</a></li>"
+        },
+        {
+            "name" : "AI Hacked Into Your Cloud Accounts",
+            "image" : "decks/CloudSecurity/BNB_CARDS_CloudDeck_INJECT_1.png",
+            "type" : "inject",
+            "id" : "062",
+            "details" : ""
+        },
+        {
+            "name" : "Cloud Provider Disabled Vulnerable Functionality",
+            "image" : "decks/CloudSecurity/BNB_CARDS_CloudDeck_INJECT_2.png",
+            "type" : "inject",
+            "id" : "063",
+            "details" : ""
+        },
+        {
+            "name" : "Cloud Bill Due",
+            "image" : "decks/CloudSecurity/BNB_CARDS_CloudDeck_INJECT_3.png",
+            "type" : "inject",
+            "id" : "064",
+            "details" : ""
+        },
+        {
+            "name" : "Cloud Security Training",
+            "image" : "decks/CloudSecurity/BNB_CARDS_CloudDeck_INJECT_4.png",
+            "type" : "inject",
+            "id" : "065",
+            "details" : "<li><a target=\"_blank\" href=\"https://www.antisyphontraining.com/\">https://www.antisyphontraining.com/</a></li>"
+        },
+        {
+            "name" : "Cryptominer",
+            "image" : "decks/CloudSecurity/BNB_CARDS_CloudDeck_INJECT_5.png",
+            "type" : "inject",
+            "id" : "066",
+            "details" : ""
+        },
+        {
+            "name" : "Dangling Domains",
+            "image" : "decks/CloudSecurity/BNB_CARDS_CloudDeck_INJECT_6.png",
+            "type" : "inject",
+            "id" : "067",
+            "details" : ""
+        },
+        {
+            "name" : "Exposed Cloud Access Keys During Public Presentation",
+            "image" : "decks/CloudSecurity/BNB_CARDS_CloudDeck_INJECT_7.png",
+            "type" : "inject",
+            "id" : "068",
+            "details" : ""
+        },
+        {
+            "name" : "I'm Not the Cloud Person",
+            "image" : "decks/CloudSecurity/BNB_CARDS_CloudDeck_INJECT_8.png",
+            "type" : "inject",
+            "id" : "069",
+            "details" : ""
+        },
+        {
+            "name" : "Regional Cloud Provider Data Center Outage",
+            "image" : "decks/CloudSecurity/BNB_CARDS_CloudDeck_INJECT_9.png",
+            "type" : "inject",
+            "id" : "070",
+            "details" : ""
+        },
+        {
+            "name" : "Third-Party Code Library Compromised",
+            "image" : "decks/CloudSecurity/BNB_CARDS_CloudDeck_INJECT_10.png",
+            "type" : "inject",
+            "id" : "071",
+            "details" : ""
+        },
+        {
+            "name" : "Query of Cloud APIs",
+            "image" : "decks/CloudSecurity/BNB_CARDS_CloudDeck_PE_1.png",
+            "type" : "pivot",
+            "id" : "072",
+            "details" : "<li><a target=\"_blank\" href=\"https://github.com/dirkjanm/ROADtools\">https://github.com/dirkjanm/ROADtools</a></li><li><a target=\"_blank\" href=\"https://github.com/nccgroup/ScoutSuite\">https://github.com/nccgroup/ScoutSuite</a></li><li><a target=\"_blank\" href=\"https://github.com/BloodHoundAD/AzureHound\">https://github.com/BloodHoundAD/AzureHound</a></li><li><a target=\"_blank\" href=\"https://github.com/prowler-cloud/prowler\">https://github.com/prowler-cloud/prowler</a></li>"
+        },
+        {
+            "name" : "Credentials Exposed in Environment Variables",
+            "image" : "decks/CloudSecurity/BNB_CARDS_CloudDeck_PE_2.png",
+            "type" : "pivot",
+            "id" : "073",
+            "details" : "<li><a target=\"_blank\" href=\"https://aws.amazon.com/premiumsupport/knowledge-center/lambda-environment-variables-iam-access/\">https://aws.amazon.com/premiumsupport/knowledge-center/lambda-environment-variables-iam-access/</a></li>"
+        },
+        {
+            "name" : "Credential Store Compromise",
+            "image" : "decks/CloudSecurity/BNB_CARDS_CloudDeck_PE_3.png",
+            "type" : "pivot",
+            "id" : "074",
+            "details" : "<li><a target=\"_blank\" href=\"https://github.com/NetSPI/MicroBurst\">https://github.com/NetSPI/MicroBurst</a></li>"
+        },
+        {
+            "name" : "Instance Metadata Service Access",
+            "image" : "decks/CloudSecurity/BNB_CARDS_CloudDeck_PE_4.png",
+            "type" : "pivot",
+            "id" : "075", 
+            "details" : "<li><a target=\"_blank\" href=\"https://portswigger.net/daily-swig/aws-bolsters-security-to-defend-against-ssrf-attacks\">https://portswigger.net/daily-swig/aws-bolsters-security-to-defend-against-ssrf-attacks</a></li><li><a target=\"_blank\" href=\"https://github.com/tracer-tick/Abusing-AWS-IMDS-v1\">https://github.com/tracer-tick/Abusing-AWS-IMDS-v1</a></li>"
+        },
+        {
+            "name" : "Malicious File Upload to Shared File Service",
+            "image" : "decks/CloudSecurity/BNB_CARDS_CloudDeck_PE_5.png",
+            "type" : "pivot",
+            "id" : "076",
+            "details" : "<li><a target=\"_blank\" href=\"https://infinitelogins.com/2020/12/17/capturing-password-hashes-via-malicious-lnk-files/\">https://infinitelogins.com/2020/12/17/capturing-password-hashes-via-malicious-lnk-files/</a></li>"
+        },
+        {
+            "name" : "Identity and Acess Management (IAM) Policy Abuse",
+            "image" : "decks/CloudSecurity/BNB_CARDS_CloudDeck_PE_6.png",
+            "type" : "pivot",
+            "id" : "077",
+            "details" : "<li><a target=\"_blank\" href=\"https://github.com/RhinoSecurityLabs/pacu\">https://github.com/RhinoSecurityLabs/pacu</a></li><li><a target=\"_blank\" href=\"https://github.com/BloodHoundAD/AzureHound\">https://github.com/BloodHoundAD/AzureHound</a></li>"
+        },
+        {
+            "name" : "Misconfigured Container Image Compromise",
+            "image" : "decks/CloudSecurity/BNB_CARDS_CloudDeck_PE_7.png",
+            "type" : "pivot",
+            "id" : "078",
+            "details" : "<li><a target=\"_blank\" href=\"https://github.com/RhinoSecurityLabs/pacu\">https://github.com/RhinoSecurityLabs/pacu</a></li><li><a target=\"_blank\" href=\"https://unit42.paloaltonetworks.com/azure-container-instances\">https://unit42.paloaltonetworks.com/azure-container-instances</a></li>"
+        },
+        {
+            "name" : "Search and Pillage Emails",
+            "image" : "decks/CloudSecurity/BNB_CARDS_CloudDeck_PE_8.png",
+            "type" : "pivot",
+            "id" : "079",
+            "details" : "<li><a target=\"_blank\" href=\"https://github.com/dafthack/MailSniper\">https://github.com/dafthack/MailSniper</a></li>"
+        },
+        {
+            "name" : "Backdoored Container Image",
+            "image" : "decks/CloudSecurity/BNB_CARDS_CloudDeck_PERSIST_1.png",
+            "type" : "persist",
+            "id" : "080",
+            "details" : "<li><a target=\"_blank\" href=\"https://github.com/RhinoSecurityLabs/ccat\">https://github.com/RhinoSecurityLabs/ccat</a></li><li><a target=\"_blank\" href=\"https://github.com/RhinoSecurityLabs/pacu\">https://github.com/RhinoSecurityLabs/pacu</a></li>"
+        },
+        {
+            "name" : "Cross-Tenant Access",
+            "image" : "decks/CloudSecurity/BNB_CARDS_CloudDeck_PERSIST_2.png",
+            "type" : "persist",
+            "id" : "081",
+            "details" : "<li><a target=\"_blank\" href=\"https://aws.amazon.com/premiumsupport/knowledge-center/cross-account-access-iam/\">https://aws.amazon.com/premiumsupport/knowledge-center/cross-account-access-iam/</a></li>"
+        },
+        {
+            "name" : "MFA Bypass: App Password Creation",
+            "image" : "decks/CloudSecurity/BNB_CARDS_CloudDeck_PERSIST_3.png",
+            "type" : "persist",
+            "id" : "082",
+            "details" : "<li><a target=\"_blank\" href=\"https://support.microsoft.com/en-us/account-billing/manage-app-passwords-for-two-step-verification-d6dc8c6d-4bf7-4851-ad95-6d07799387e9\">https://support.microsoft.com/en-us/account-billing/manage-app-passwords-for-two-step-verification-d6dc8c6d-4bf7-4851-ad95-6d07799387e9</a></li>"
+        },
+        {
+            "name" : "Secondary Access Key Creation",
+            "image" : "decks/CloudSecurity/BNB_CARDS_CloudDeck_PERSIST_4.png",
+            "type" : "persist",
+            "id" : "083",
+            "details" : "<li><a target=\"_blank\" href=\"https://github.com/RhinoSecurityLabs/pacu\">https://github.com/RhinoSecurityLabs/pacu</a></li>"
+        },
+        {
+            "name" : "Cloud Event Log Analysis",
+            "image" : "decks/CloudSecurity/BNB_CARDS_CloudDeck_PROCEDURE_1.png",
+            "type" : "procedure",
+            "id" : "084",
+            "details" : ""
+        },
+        {
+            "name" : "Permissions Audit",
+            "image" : "decks/CloudSecurity/BNB_CARDS_CloudDeck_PROCEDURE_2.png",
+            "type" : "procedure",
+            "id" : "085",
+            "details" : ""
+        }
+    ],
+
+    "red": "img/bb-back-init.png",
+    "yellow": "img/bb-back-pivot.png",
+    "brown": "img/bb-back-c2.png",
+    "purple": "img/bb-back-persist.png",
+    "grey":   "img/bb-back-inject.png",
+    "green":  "",
+    "logo":   "img/antisyphon.png",
+    "addOnEnabled":"true"
+
+}

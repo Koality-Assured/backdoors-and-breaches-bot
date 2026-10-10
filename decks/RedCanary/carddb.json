@@ -1,0 +1,251 @@
+{
+    "title": "Red Canary Expansion",
+    "revdate": "06-14-2023",
+    "link": "https://www.redcanary.com/",
+    "data" : [
+        {
+            "name" : "Call a Consultant",
+            "image" : "decks/RedCanary/REDCANARY__1.png",
+            "type" : "procedure",
+            "id" : "052",
+            "details" : ""
+        },
+        {
+            "name" : "Physical Security Review",
+            "image" : "decks/RedCanary/REDCANARY__2.png",
+            "type" : "procedure",
+            "id" : "053",
+            "details" : ""
+        },
+        {
+            "name" : "USB Drive-By",
+            "image" : "decks/RedCanary/REDCANARY__3.png",
+            "type" : "initial",
+            "id" : "054",
+            "details" : "<li><a target=\"_blank\" href=\"https://redcanary.com/blog/raspberry-robin/\">https://redcanary.com/blog/raspberry-robin/</a></li><li><a target=\"_blank\" href=\"https://attack.mitre.org/techniques/T1091/\">https://attack.mitre.org/techniques/T1091/</a></li>"
+        },
+        {
+            "name" : "Compiled After Delivery",
+            "image" : "decks/RedCanary/REDCANARY__4.png",
+            "type" : "initial",
+            "id" : "055",
+            "details" : "<li><a target=\"_blank\" href=\"https://attack.mitre.org/techniques/T1027/004/\">https://attack.mitre.org/techniques/T1027/004/</a></li>"
+        },
+        {
+            "name" : "Gatekeeper Bypass",
+            "image" : "decks/RedCanary/REDCANARY__5.png",
+            "type" : "initial",
+            "id" : "056",
+            "details" : "<li><a target=\"_blank\" href=\"https://attack.mitre.org/techniques/T1553/001/\">https://attack.mitre.org/techniques/T1553/001/</a></li>"
+        },
+        {
+            "name" : "Obfuscated Payload Delivery",
+            "image" : "decks/RedCanary/REDCANARY__6.png",
+            "type" : "initial",
+            "id" : "057",
+            "details" : "<li><a target=\"_blank\" href=\"https://attack.mitre.org/techniques/T1027/\">https://attack.mitre.org/techniques/T1027/</a></li>"
+        },
+        {
+            "name" : "RFID Thief",
+            "image" : "decks/RedCanary/REDCANARY__7.png",
+            "type" : "initial",
+            "id" : "058",
+            "details" : "<li><a target=\"_blank\" href=\"https://docs.flipperzero.one/\">https://docs.flipperzero.one/</a></li>"
+        },
+        {
+            "name" : "Disabling Windows Defender",
+            "image" : "decks/RedCanary/REDCANARY__8.png",
+            "type" : "pivot",
+            "id" : "059",
+            "details" : "<li><a target=\"_blank\" href=\"https://attack.mitre.org/techniques/T1059/001/\">https://attack.mitre.org/techniques/T1059/001/</a></li>"
+        },
+        {
+            "name" : "Process Injection",
+            "image" : "decks/RedCanary/REDCANARY__9.png",
+            "type" : "pivot",
+            "id" : "060",
+            "details" : "<li><a target=\"_blank\" href=\"https://attack.mitre.org/techniques/T1055/\">https://attack.mitre.org/techniques/T1055/</a></li>"
+        },
+        {
+            "name" : "LSASS Credential Dump",
+            "image" : "decks/RedCanary/REDCANARY__10.png",
+            "type" : "pivot",
+            "id" : "061",
+            "details" : "<li><a target=\"_blank\" href=\"https://attack.mitre.org/techniques/T1003/001/\">https://attack.mitre.org/techniques/T1003/001/</a></li>"
+        },
+        {
+            "name" : "Application Control Bypass",
+            "image" : "decks/RedCanary/REDCANARY__11.png",
+            "type" : "pivot",
+            "id" : "062",
+            "details" : "<li><a target=\"_blank\" href=\"https://attack.mitre.org/techniques/T1218/011/\">https://attack.mitre.org/techniques/T1218/011/</a></li>"
+        },
+        {
+            "name" : "Read/Write With chmod 777",
+            "image" : "decks/RedCanary/REDCANARY__12.png",
+            "type" : "pivot",
+            "id" : "063",
+            "details" : "<li><a target=\"_blank\" href=\"https://attack.mitre.org/techniques/T1548/001/\">https://attack.mitre.org/techniques/T1548/001/</a></li>"
+        },
+        {
+            "name" : "PsExec Abuse",
+            "image" : "decks/RedCanary/REDCANARY__13.png",
+            "type" : "pivot",
+            "id" : "064",
+            "details" : "<li><a target=\"_blank\" href=\"https://attack.mitre.org/techniques/T1021/002/\">https://attack.mitre.org/techniques/T1021/002/</a></li>"
+        },
+        {
+            "name" : "Lateral Tool Transfer",
+            "image" : "decks/RedCanary/REDCANARY__14.png",
+            "type" : "pivot",
+            "id" : "065",
+            "details" : "<li><a target=\"_blank\" href=\"https://attack.mitre.org/techniques/T1570/\">https://attack.mitre.org/techniques/T1570/</a></li>"
+        },
+        {
+            "name" : "Authorized Remote Tools",
+            "image" : "decks/RedCanary/REDCANARY__15.png",
+            "type" : "c2",
+            "id" : "066",
+            "details" : "<li><a target=\"_blank\" href=\"https://attack.mitre.org/techniques/T1219/\">https://attack.mitre.org/techniques/T1219/</a></li>"
+        },
+        {
+            "name" : "Cloud Services as Exfil",
+            "image" : "decks/RedCanary/REDCANARY__16.png",
+            "type" : "c2",
+            "id" : "067",
+            "details" : "<li><a target=\"_blank\" href=\"https://attack.mitre.org/techniques/T1528/\">https://attack.mitre.org/techniques/T1528/</a></li>"
+        },
+        {
+            "name" : "Bluetooth as Exfil",
+            "image" : "decks/RedCanary/REDCANARY__17.png",
+            "type" : "c2",
+            "id" : "068",
+            "details" : "<li><a target=\"_blank\" href=\"https://attack.mitre.org/techniques/T1011/001/\">https://attack.mitre.org/techniques/T1011/001/</a></li>"
+        },
+        {
+            "name" : "Malicious Access Point",
+            "image" : "decks/RedCanary/REDCANARY__18.png",
+            "type" : "c2",
+            "id" : "069",
+            "details" : ""
+        },
+        {
+            "name" : "Event-Triggered Execution",
+            "image" : "decks/RedCanary/REDCANARY__19.png",
+            "type" : "persist",
+            "id" : "070",
+            "details" : "<li><a target=\"_blank\" href=\"https://attack.mitre.org/techniques/T1047/\">https://attack.mitre.org/techniques/T1047/</a></li>"
+        },
+        {
+            "name" : "Scheduled Task",
+            "image" : "decks/RedCanary/REDCANARY__20.png",
+            "type" : "persist",
+            "id" : "071",
+            "details" : "<li><a target=\"_blank\" href=\"https://attack.mitre.org/techniques/T1053/005/\">https://attack.mitre.org/techniques/T1053/005/</a></li>"
+        },
+        {
+            "name" : "Rename Process",
+            "image" : "decks/RedCanary/REDCANARY__21.png",
+            "type" : "persist",
+            "id" : "072",
+            "details" : "<li><a target=\"_blank\" href=\"https://attack.mitre.org/techniques/T1036/003/\">https://attack.mitre.org/techniques/T1036/003/</a></li>"
+        },
+        {
+            "name" : "Spawn Web Shell",
+            "image" : "decks/RedCanary/REDCANARY__22.png",
+            "type" : "persist",
+            "id" : "073",
+            "details" : "<li><a target=\"_blank\" href=\"https://attack.mitre.org/techniques/T1059/003/\">https://attack.mitre.org/techniques/T1059/003/</a></li>"
+        },
+        {
+            "name" : "Missed Payday",
+            "image" : "decks/RedCanary/REDCANARY__23.png",
+            "type" : "inject",
+            "id" : "074",
+            "details" : ""
+        },
+        {
+            "name" : "Not a Red Team",
+            "image" : "decks/RedCanary/REDCANARY__24.png",
+            "type" : "inject",
+            "id" : "075",
+            "details" : ""
+        },
+        {
+            "name" : "Deez Registry Keyz Plz?",
+            "image" : "decks/RedCanary/REDCANARY__25.png",
+            "type" : "inject",
+            "id" : "076",
+            "details" : ""
+        },
+        {
+            "name" : "Nuclear Test Site",
+            "image" : "decks/RedCanary/REDCANARY__26.png",
+            "type" : "inject",
+            "id" : "077",
+            "details" : "<li><a target=\"_blank\" href=\"https://atomicredteam.io/\">https://atomicredteam.io/</a></li>"
+        },
+        {
+            "name" : "Quishing",
+            "image" : "decks/RedCanary/REDCANARY__27.png",
+            "type" : "inject",
+            "id" : "078",
+            "details" : ""
+        },
+        {
+            "name" : "Cat on Keyboard Deletes Production Database",
+            "image" : "decks/RedCanary/REDCANARY__28.png",
+            "type" : "inject",
+            "id" : "079",
+            "details" : ""
+        },
+        {
+            "name" : "Undocumented System",
+            "image" : "decks/RedCanary/REDCANARY__29.png",
+            "type" : "inject",
+            "id" : "080",
+            "details" : ""
+        },
+        {
+            "name" : "Sneaky Sneaky RAT",
+            "image" : "decks/RedCanary/REDCANARY__30.png",
+            "type" : "inject",
+            "id" : "081",
+            "details" : "<li><a target=\"_blank\" href=\"https://attack.mitre.org/techniques/T1105/\">https://attack.mitre.org/techniques/T1105/</a></li>"
+        },
+        {
+            "name" : "Adam Mashinchi",
+            "image" : "decks/RedCanary/REDCANARY__31.png",
+            "type" : "consultant",
+            "id" : "082",
+            "details" : "<li><a target=\"_blank\" href=\"https://twitter.com/Adam_Mashinchi\">https://twitter.com/Adam_Mashinchi</a></li>"
+        },
+        {
+            "name" : "Carrie Roberts",
+            "image" : "decks/RedCanary/REDCANARY__32.png",
+            "type" : "consultant",
+            "id" : "083",
+            "details" : "<li><a target=\"_blank\" href=\"https://twitter.com/oroneequalsone\">https://twitter.com/oroneequalsone</a></li>"
+        },
+        {
+            "name" : "Mike Haag",
+            "image" : "decks/RedCanary/REDCANARY__33.png",
+            "type" : "consultant",
+            "id" : "084",
+            "details" : "<li><a target=\"_blank\" href=\"https://twitter.com/M_haggis\">https://twitter.com/M_haggis</a></li>"
+        }
+        
+
+    ],
+
+    "red": "img/bb-back-init.png",
+    "yellow": "img/bb-back-pivot.png",
+    "brown": "img/bb-back-c2.png",
+    "purple": "img/bb-back-persist.png",
+    "grey":   "img/bb-back-inject.png",
+    "green":  "img/bb-back-consultant.png",
+    "logo":   "img/RedCanary_Logo_Primary.png",
+    "addOnEnabled":"true"
+
+
+}
