@@ -13,9 +13,9 @@
 [![CI](https://github.com/Koality-Assured/backdoors-and-breaches-bot/actions/workflows/ci.yml/badge.svg)](https://github.com/Koality-Assured/backdoors-and-breaches-bot/actions/workflows/ci.yml)
 [![Docker](https://github.com/Koality-Assured/backdoors-and-breaches-bot/actions/workflows/docker.yml/badge.svg)](https://github.com/Koality-Assured/backdoors-and-breaches-bot/actions/workflows/docker.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
-[![BHIS Attribution](https://img.shields.io/badge/B%26B%20Cards-CC%20BY--SA%204.0-orange.svg)](https://www.blackhillsinfosec.com/projects/backdoors-breaches/)
+[![BHIS Attribution](https://img.shields.io/badge/B%26B%20Cards-CC%20BY--SA%204.0-orange.svg)](https://www.blackhillsinfosec.com/projects/backdoors-and-breaches/)
 [![Python 3.10+](https://img.shields.io/badge/python-3.10+-blue.svg)](pyproject.toml)
-[![Domain: Bot](https://img.shields.io/badge/domain-bot-blueviolet.svg)]()
+[![Domain: Bot](https://img.shields.io/badge/domain-bot-blueviolet.svg)](#)
 [![Conventional Commits](https://img.shields.io/badge/Conventional%20Commits-1.0.0-yellow.svg)](https://conventionalcommits.org)
 
 </div>
