@@ -5,6 +5,7 @@ Interactive Discord Views and UI Components for Backdoors & Breaches.
 from __future__ import annotations
 
 import logging
+import time
 from typing import TYPE_CHECKING, List, Optional
 
 import discord
@@ -36,19 +37,20 @@ class GameLobbyView(discord.ui.View):
 
     @discord.ui.button(label="Join Game", style=discord.ButtonStyle.green, emoji="🎮")
     async def join_button(self, interaction: discord.Interaction, button: discord.ui.Button) -> None:
-        if self.game.phase != GamePhase.LOBBY:
-            await interaction.response.send_message("This game has already started.", ephemeral=True)
-            return
+        async with self.game.lock:
+            if self.game.phase != GamePhase.LOBBY:
+                await interaction.response.send_message("This game has already started.", ephemeral=True)
+                return
 
-        added = self.game.add_player(interaction.user.id, interaction.user.display_name)
-        if added:
-            players_list = ", ".join(p.display_name for p in self.game.players.values())
-            await interaction.response.send_message(
-                f"✅ **{interaction.user.display_name}** joined the incident response exercise!\n"
-                f"Defenders ({len(self.game.players)}): {players_list}",
-            )
-        else:
-            await interaction.response.send_message("You are already in the lobby.", ephemeral=True)
+            added = self.game.add_player(interaction.user.id, interaction.user.display_name)
+            if added:
+                players_list = ", ".join(p.display_name for p in self.game.players.values())
+                await interaction.response.send_message(
+                    f"✅ **{interaction.user.display_name}** joined the incident response exercise!\n"
+                    f"Defenders ({len(self.game.players)}): {players_list}",
+                )
+            else:
+                await interaction.response.send_message("You are already in the lobby.", ephemeral=True)
 
     @discord.ui.button(label="Leave", style=discord.ButtonStyle.grey, emoji="🚪")
     async def leave_button(self, interaction: discord.Interaction, button: discord.ui.Button) -> None:
@@ -56,11 +58,12 @@ class GameLobbyView(discord.ui.View):
             await interaction.response.send_message("The Incident Master cannot leave the lobby. End the game instead.", ephemeral=True)
             return
 
-        removed = self.game.remove_player(interaction.user.id)
-        if removed:
-            await interaction.response.send_message(f"**{interaction.user.display_name}** left the game.", ephemeral=True)
-        else:
-            await interaction.response.send_message("You are not currently in this game.", ephemeral=True)
+        async with self.game.lock:
+            removed = self.game.remove_player(interaction.user.id)
+            if removed:
+                await interaction.response.send_message(f"**{interaction.user.display_name}** left the game.", ephemeral=True)
+            else:
+                await interaction.response.send_message("You are not currently in this game.", ephemeral=True)
 
     @discord.ui.button(label="Start Game", style=discord.ButtonStyle.primary, emoji="🚀")
     async def start_button(self, interaction: discord.Interaction, button: discord.ui.Button) -> None:
@@ -68,10 +71,11 @@ class GameLobbyView(discord.ui.View):
             await interaction.response.send_message("Only the Incident Master can start the game.", ephemeral=True)
             return
 
-        success = self.game.start_game(self.deck_loader)
-        if not success:
-            await interaction.response.send_message("Failed to initialize game scenario. Please check decks.", ephemeral=True)
-            return
+        async with self.game.lock:
+            success = self.game.start_game(self.deck_loader)
+            if not success:
+                await interaction.response.send_message("Failed to initialize game scenario. Please check decks.", ephemeral=True)
+                return
 
         self.stop()
         scenario_embed = create_scenario_embed(self.game, show_secrets=False)
@@ -127,18 +131,21 @@ class PlayerTurnView(discord.ui.View):
 
     @discord.ui.button(label="Pass Turn", style=discord.ButtonStyle.red, emoji="⏭️")
     async def pass_button(self, interaction: discord.Interaction, button: discord.ui.Button) -> None:
-        curr_player = self.game.get_current_player()
-        if not curr_player or curr_player.user_id != interaction.user.id:
-            await interaction.response.send_message("It is not currently your turn.", ephemeral=True)
-            return
+        async with self.game.lock:
+            curr_player = self.game.get_current_player()
+            if not curr_player or curr_player.user_id != interaction.user.id:
+                await interaction.response.send_message("It is not currently your turn.", ephemeral=True)
+                return
 
-        passed = self.game.pass_turn(interaction.user.id)
-        if passed:
-            next_player = self.game.get_current_player()
-            next_mention = f"<@{next_player.user_id}>" if next_player else "Defenders"
-            await interaction.response.send_message(
-                f"⏭️ **{interaction.user.display_name}** passed their turn. It is now {next_mention}'s turn!"
-            )
+            passed = self.game.pass_turn(interaction.user.id)
+            if passed:
+                next_player = self.game.get_current_player()
+                next_mention = f"<@{next_player.user_id}>" if next_player else "Defenders"
+                await interaction.response.send_message(
+                    f"⏭️ **{interaction.user.display_name}** passed their turn. It is now {next_mention}'s turn!"
+                )
+            else:
+                await interaction.response.send_message("Failed to pass turn.", ephemeral=True)
 
 
 class ProcedureSelectView(discord.ui.View):
@@ -224,20 +231,27 @@ class ProcedureSelectView(discord.ui.View):
             await interaction.response.send_message("Please select a procedure card first.", ephemeral=True)
             return
 
-        try:
-            result = self.game.play_procedure(
-                user_id=interaction.user.id,
-                card_name=self.selected_card_name,
-                target_category=self.selected_target,
-            )
-        except Exception as exc:
-            await interaction.response.send_message(f"Error: {exc}", ephemeral=True)
-            return
+        async with self.game.lock:
+            # Verify turn under lock to prevent concurrent double-click race
+            curr_player = self.game.get_current_player()
+            if not curr_player or curr_player.user_id != interaction.user.id:
+                await interaction.response.send_message("It is no longer your turn.", ephemeral=True)
+                return
+
+            try:
+                result = self.game.play_procedure(
+                    user_id=interaction.user.id,
+                    card_name=self.selected_card_name,
+                    target_category=self.selected_target,
+                )
+            except Exception as exc:
+                await interaction.response.send_message(f"Error: {exc}", ephemeral=True)
+                return
 
         self.stop()
         roll_embed = create_roll_embed(result)
 
-        # Send card artwork if available
+        # Send card artwork if available with graceful fallback
         files: List[discord.File] = []
         if result.card.image_path:
             try:
@@ -246,11 +260,19 @@ class ProcedureSelectView(discord.ui.View):
             except Exception:
                 pass
 
-        await interaction.response.send_message(
-            f"🎲 **{interaction.user.display_name}** played **{result.card.name}**!",
-            embed=roll_embed,
-            files=files,
-        )
+        try:
+            await interaction.response.send_message(
+                f"🎲 **{interaction.user.display_name}** played **{result.card.name}**!",
+                embed=roll_embed,
+                files=files,
+            )
+        except (discord.HTTPException, OSError) as exc:
+            logger.warning("Failed sending roll interaction with files (%s), falling back to embed-only", exc)
+            roll_embed.set_thumbnail(url=None)
+            await interaction.response.send_message(
+                f"🎲 **{interaction.user.display_name}** played **{result.card.name}**!",
+                embed=roll_embed,
+            )
 
         # If game concluded, announce victory or defeat
         if self.game.phase == GamePhase.VICTORY:
@@ -300,11 +322,19 @@ class IncidentMasterControlView(discord.ui.View):
             except Exception:
                 pass
 
-        await interaction.channel.send(
-            "💉 **INCIDENT MASTER TRIGGERED AN INJECT!**",
-            embed=inject_embed,
-            files=files,
-        )
+        try:
+            await interaction.channel.send(
+                "💉 **INCIDENT MASTER TRIGGERED AN INJECT!**",
+                embed=inject_embed,
+                files=files,
+            )
+        except (discord.HTTPException, OSError) as exc:
+            logger.warning("Failed sending inject with files (%s), falling back to embed-only", exc)
+            inject_embed.set_image(url=None)
+            await interaction.channel.send(
+                "💉 **INCIDENT MASTER TRIGGERED AN INJECT!**",
+                embed=inject_embed,
+            )
         await interaction.response.send_message("Inject broadcast to channel.", ephemeral=True)
 
     @discord.ui.button(label="End Game", style=discord.ButtonStyle.danger, emoji="🛑")
@@ -324,12 +354,14 @@ class IncidentMasterControlView(discord.ui.View):
 
 
 class CardPagingView(discord.ui.View):
-    """Paging navigator for browsing card lists and search results."""
+    """Paging navigator for browsing card lists and search results with rate-limit protection."""
 
     def __init__(self, cards: List[Card], timeout: float = 300.0) -> None:
         super().__init__(timeout=timeout)
         self.cards = cards
         self.current_page = 0
+        self.last_interaction: float = 0.0
+        self.debounce_seconds: float = 0.35
         self._update_buttons()
 
     def _update_buttons(self) -> None:
@@ -353,6 +385,12 @@ class CardPagingView(discord.ui.View):
 
     @discord.ui.button(label="◀️ Prev", style=discord.ButtonStyle.grey)
     async def prev_btn(self, interaction: discord.Interaction, button: discord.ui.Button) -> None:
+        now = time.time()
+        if (now - self.last_interaction) < self.debounce_seconds:
+            await interaction.response.defer()
+            return
+        self.last_interaction = now
+
         if self.current_page > 0:
             self.current_page -= 1
             self._update_buttons()
@@ -360,7 +398,13 @@ class CardPagingView(discord.ui.View):
             kwargs = {"embed": embed, "view": self}
             if file_obj:
                 kwargs["attachments"] = [file_obj]
-            await interaction.response.edit_message(**kwargs)
+            try:
+                await interaction.response.edit_message(**kwargs)
+            except discord.HTTPException as exc:
+                if exc.status == 429:
+                    logger.warning("Discord 429 rate limit hit on CardPagingView prev: %s", exc)
+                else:
+                    logger.error("Failed to edit paging message: %s", exc)
         else:
             await interaction.response.defer()
 
@@ -370,6 +414,12 @@ class CardPagingView(discord.ui.View):
 
     @discord.ui.button(label="Next ▶️", style=discord.ButtonStyle.grey)
     async def next_btn(self, interaction: discord.Interaction, button: discord.ui.Button) -> None:
+        now = time.time()
+        if (now - self.last_interaction) < self.debounce_seconds:
+            await interaction.response.defer()
+            return
+        self.last_interaction = now
+
         if self.current_page < len(self.cards) - 1:
             self.current_page += 1
             self._update_buttons()
@@ -377,7 +427,13 @@ class CardPagingView(discord.ui.View):
             kwargs = {"embed": embed, "view": self}
             if file_obj:
                 kwargs["attachments"] = [file_obj]
-            await interaction.response.edit_message(**kwargs)
+            try:
+                await interaction.response.edit_message(**kwargs)
+            except discord.HTTPException as exc:
+                if exc.status == 429:
+                    logger.warning("Discord 429 rate limit hit on CardPagingView next: %s", exc)
+                else:
+                    logger.error("Failed to edit paging message: %s", exc)
         else:
             await interaction.response.defer()
 
@@ -418,4 +474,9 @@ class FacilitatorView(discord.ui.View):
                 embed.set_image(url="attachment://inject.png")
             except Exception:
                 pass
-        await interaction.response.send_message(embed=embed, files=files)
+        try:
+            await interaction.response.send_message(embed=embed, files=files)
+        except (discord.HTTPException, OSError) as exc:
+            logger.warning("Failed sending facilitator inject with files (%s), falling back to embed-only", exc)
+            embed.set_image(url=None)
+            await interaction.response.send_message(embed=embed)

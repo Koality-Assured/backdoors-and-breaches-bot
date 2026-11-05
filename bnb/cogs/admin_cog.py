@@ -6,6 +6,7 @@ from __future__ import annotations
 
 import logging
 import time
+from typing import TYPE_CHECKING, Optional
 
 import discord
 from discord.ext import commands
@@ -17,25 +18,35 @@ from bnb.ui.embeds import (
     create_rules_embed,
 )
 
+if TYPE_CHECKING:
+    from bnb.engine import GameManager
+
 logger = logging.getLogger(__name__)
 
 
 class AdminCog(commands.Cog, name="Admin"):
     """Administration, Help, and Diagnostics."""
 
-    def __init__(self, bot: commands.Bot, deck_loader: DeckLoader, settings: Settings) -> None:
+    def __init__(
+        self,
+        bot: commands.Bot,
+        deck_loader: DeckLoader,
+        settings: Settings,
+        game_manager: Optional[GameManager] = None,
+    ) -> None:
         self.bot = bot
         self.deck_loader = deck_loader
         self.settings = settings
+        self.game_manager = game_manager
         self.start_time = time.time()
 
-    @commands.hybrid_command(name="bnbhelp", description="Show comprehensive command guide and documentation.")
+    @commands.hybrid_command(name="bnbhelp", aliases=["tthelp", "help"], description="Show comprehensive command guide and documentation.")
     async def bnb_help(self, ctx: commands.Context) -> None:
         """Display help embed."""
         embed = create_help_embed(prefix=self.settings.command_prefix)
         await ctx.reply(embed=embed)
 
-    @commands.hybrid_command(name="bnbrules", description="Quick reference rules for Backdoors & Breaches.")
+    @commands.hybrid_command(name="bnbrules", aliases=["rules"], description="Quick reference rules for Backdoors & Breaches.")
     async def bnb_rules(self, ctx: commands.Context) -> None:
         """Display rules reference."""
         embed = create_rules_embed()
@@ -60,6 +71,12 @@ class AdminCog(commands.Cog, name="Admin"):
         embed.add_field(name="Latency", value=f"`{latency_ms} ms`", inline=True)
         embed.add_field(name="Uptime", value=f"`{uptime_str}`", inline=True)
         embed.add_field(name="Loaded Decks", value=f"`{decks_count}` ({cards_count} cards)", inline=True)
+
+        if self.game_manager is not None:
+            self.game_manager.prune_stale_games()
+            active_games = len(self.game_manager.games)
+            embed.add_field(name="Active Games", value=f"`{active_games}`", inline=True)
+
         await ctx.reply(embed=embed)
 
     @commands.hybrid_command(name="about", description="About this Backdoors & Breaches Discord bot.")

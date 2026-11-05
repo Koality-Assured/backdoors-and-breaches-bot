@@ -45,7 +45,7 @@ class AssistantCog(commands.Cog, name="Facilitator"):
                 choices.append(app_commands.Choice(name=f"{d.title} ({len(d.cards)} cards)", value=d.id))
         return choices[:25]
 
-    @commands.hybrid_command(name="roll", description="Roll a die (e.g., 20-sided for B&B) with optional modifier.")
+    @commands.hybrid_command(name="roll", aliases=["roll-dice"], description="Roll a die (e.g., 20-sided for B&B) with optional modifier.")
     @app_commands.describe(
         sides="Number of sides on the die (default: 20)",
         modifier="Additive modifier (e.g., 3 for hand bonus)",
