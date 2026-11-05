@@ -82,7 +82,12 @@ class CardsCog(commands.Cog, name="Cards"):
                 logger.error("Could not load image %s: %s", card.image_path, e)
 
         embed = create_card_embed(card, file_attachment_name=attach_name)
-        await ctx.reply(embed=embed, files=files)
+        try:
+            await ctx.reply(embed=embed, files=files)
+        except (discord.HTTPException, OSError) as exc:
+            logger.warning("Failed sending card with attachment (%s), falling back to embed-only", exc)
+            embed.set_image(url=None)
+            await ctx.reply(embed=embed)
 
     @commands.hybrid_command(name="search", description="Search cards by keyword across all decks.")
     @app_commands.describe(
@@ -113,7 +118,12 @@ class CardsCog(commands.Cog, name="Cards"):
                 except Exception:
                     pass
             embed = create_card_embed(card, file_attachment_name=attach_name)
-            await ctx.reply(embed=embed, files=files)
+            try:
+                await ctx.reply(embed=embed, files=files)
+            except (discord.HTTPException, OSError) as exc:
+                logger.warning("Failed sending single card search result with file (%s), falling back to embed-only", exc)
+                embed.set_image(url=None)
+                await ctx.reply(embed=embed)
             return
 
         # Multiple results: launch interactive paging view
@@ -122,7 +132,13 @@ class CardsCog(commands.Cog, name="Cards"):
         kwargs = {"embed": embed, "view": paging_view}
         if file_obj:
             kwargs["files"] = [file_obj]
-        await ctx.reply(**kwargs)
+        try:
+            await ctx.reply(**kwargs)
+        except (discord.HTTPException, OSError) as exc:
+            logger.warning("Failed sending paging search results with file (%s), falling back to embed-only", exc)
+            kwargs.pop("files", None)
+            embed.set_image(url=None)
+            await ctx.reply(**kwargs)
 
     @commands.hybrid_command(name="decks", description="List all loaded Backdoors & Breaches decks and expansions.")
     async def list_decks(self, ctx: commands.Context) -> None:
@@ -131,7 +147,7 @@ class CardsCog(commands.Cog, name="Cards"):
         embed = create_deck_list_embed(decks)
         await ctx.reply(embed=embed)
 
-    @commands.hybrid_command(name="dump", description="Browse cards of a specific type (e.g., procedure, inject).")
+    @commands.hybrid_command(name="dump", aliases=["dump-cards"], description="Browse cards of a specific type (e.g., procedure, inject).")
     @app_commands.describe(
         card_type="Type of cards to browse",
         deck="Optional expansion deck filter",
@@ -165,4 +181,36 @@ class CardsCog(commands.Cog, name="Cards"):
         kwargs = {"embed": embed, "view": paging_view}
         if file_obj:
             kwargs["files"] = [file_obj]
-        await ctx.reply(**kwargs)
+        try:
+            await ctx.reply(**kwargs)
+        except (discord.HTTPException, OSError) as exc:
+            logger.warning("Failed sending dump cards paging result with file (%s), falling back to embed-only", exc)
+            kwargs.pop("files", None)
+            embed.set_image(url=None)
+            await ctx.reply(**kwargs)
+
+    @commands.hybrid_command(name="types", aliases=["get-types"], description="Display all Backdoors & Breaches card types and roles.")
+    async def list_card_types(self, ctx: commands.Context) -> None:
+        """Display an overview of all 7 Backdoors & Breaches card types."""
+        embed = discord.Embed(
+            title="🃏 Backdoors & Breaches Card Types",
+            description="Overview of the 7 core card categories in Backdoors & Breaches tabletop exercises.",
+            color=0x2563EB,
+        )
+        type_descriptions = {
+            CardType.INITIAL: "How the adversary initially broke into the organization (The Foothold).",
+            CardType.PIVOT: "How the attacker escalated privileges and moved laterally across the network.",
+            CardType.PERSIST: "How the adversary survives system restarts and maintains uninterrupted access.",
+            CardType.C2: "Command & Control infrastructure and data exfiltration channels.",
+            CardType.PROCEDURE: "Defensive countermeasures and investigative actions rolled by defenders.",
+            CardType.INJECT: "Unforeseen scenario complications, surprises, or sudden breakthroughs.",
+            CardType.CONSULTANT: "Expert advisors providing specialized abilities and roll modifications.",
+        }
+        for ctype in CardType:
+            embed.add_field(
+                name=f"{ctype.emoji} {ctype.display_name} (`{ctype.value}`)",
+                value=type_descriptions.get(ctype, ctype.value),
+                inline=False,
+            )
+        embed.set_footer(text="Backdoors & Breaches • Black Hills Information Security")
+        await ctx.reply(embed=embed)

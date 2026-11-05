@@ -160,3 +160,45 @@ def test_game_manager():
 
     gm.delete_game(101)
     assert gm.get_game(101) is None
+
+
+def test_game_lock_and_activity(new_game, loader):
+    import asyncio
+    assert isinstance(new_game.lock, asyncio.Lock)
+    initial_activity = new_game.last_activity
+
+    new_game.start_game(loader)
+    alice = new_game.get_current_player()
+    new_game.pass_turn(alice.user_id)
+    assert new_game.last_activity >= initial_activity
+
+
+def test_game_manager_prune_stale_games():
+    gm = GameManager()
+    # 1. Active game (should not be pruned)
+    g_active = gm.create_game(101, 1, 901, "IM1")
+    g_active.phase = GamePhase.IN_PROGRESS
+
+    # 2. Victory game (terminal phase, should be pruned)
+    g_victory = gm.create_game(102, 1, 902, "IM2")
+    g_victory.phase = GamePhase.VICTORY
+
+    # 3. Defeat game (terminal phase, should be pruned)
+    g_defeat = gm.create_game(103, 1, 903, "IM3")
+    g_defeat.phase = GamePhase.DEFEAT
+
+    # 4. Ended game (terminal phase, should be pruned)
+    g_ended = gm.create_game(104, 1, 904, "IM4")
+    g_ended.phase = GamePhase.ENDED
+
+    # 5. Stale lobby game (idle for 100,000s > 86,400s, should be pruned)
+    g_stale = gm.create_game(105, 1, 905, "IM5")
+    g_stale.last_activity -= 100000.0
+
+    pruned_count = gm.prune_stale_games(max_idle_seconds=86400.0)
+    assert pruned_count == 4
+    assert gm.get_game(101) is not None
+    assert gm.get_game(102) is None
+    assert gm.get_game(103) is None
+    assert gm.get_game(104) is None
+    assert gm.get_game(105) is None

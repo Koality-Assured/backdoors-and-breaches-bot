@@ -71,7 +71,7 @@ async def main() -> None:
     await bot.add_cog(GameCog(bot, deck_loader, game_manager, settings))
     await bot.add_cog(AssistantCog(bot, deck_loader, settings))
     await bot.add_cog(CardsCog(bot, deck_loader, settings))
-    await bot.add_cog(AdminCog(bot, deck_loader, settings))
+    await bot.add_cog(AdminCog(bot, deck_loader, settings, game_manager=game_manager))
 
     @bot.event
     async def on_ready() -> None:

@@ -5,6 +5,7 @@ Decoupled from Discord I/O for clean testing and reliable state transitions.
 
 from __future__ import annotations
 
+import asyncio
 import logging
 import random
 import time
@@ -63,6 +64,8 @@ class BnbGame:
         self.failed_roll_streak: int = 0
         self.active_modifiers: Dict[str, int] = {}
         self.history: List[GameAction] = []
+        self.last_activity: float = time.time()
+        self.lock: asyncio.Lock = asyncio.Lock()
 
         # Automatically add the Incident Master as a participant
         im_player = Player(
@@ -483,6 +486,7 @@ class BnbGame:
         success: Optional[bool] = None,
         card_name: Optional[str] = None,
     ) -> None:
+        self.last_activity = time.time()
         self.history.append(
             GameAction(
                 turn=turn,
@@ -540,3 +544,21 @@ class GameManager:
             if user_id in game.players and game.phase in (GamePhase.LOBBY, GamePhase.IN_PROGRESS):
                 return game
         return None
+
+    def prune_stale_games(self, max_idle_seconds: float = 86400.0) -> int:
+        """
+        Prunes completed, ended, or abandoned games to prevent memory leaks.
+        Removes games in terminal states (VICTORY, DEFEAT, ENDED) or idle beyond max_idle_seconds.
+        Returns the number of pruned game sessions.
+        """
+        now = time.time()
+        to_prune: List[int] = []
+        for channel_id, game in self.games.items():
+            if game.phase in (GamePhase.VICTORY, GamePhase.DEFEAT, GamePhase.ENDED):
+                to_prune.append(channel_id)
+            elif (now - getattr(game, "last_activity", now)) > max_idle_seconds:
+                to_prune.append(channel_id)
+
+        for cid in to_prune:
+            self.games.pop(cid, None)
+        return len(to_prune)

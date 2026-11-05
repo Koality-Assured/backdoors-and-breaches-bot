@@ -252,22 +252,23 @@ class GameCog(commands.Cog, name="Game"):
             await ctx.reply("No game is currently in progress.", ephemeral=True)
             return
 
-        curr_player = game.get_current_player()
-        if not curr_player or curr_player.user_id != ctx.author.id:
-            await ctx.reply(f"It is not your turn. Current turn: <@{curr_player.user_id}>", ephemeral=True)
-            return
-
         target_cat = CardType.from_str(target.value) if target else None
 
-        try:
-            result = game.play_procedure(
-                user_id=ctx.author.id,
-                card_name=card_name,
-                target_category=target_cat,
-            )
-        except Exception as exc:
-            await ctx.reply(f"❌ {exc}", ephemeral=True)
-            return
+        async with game.lock:
+            curr_player = game.get_current_player()
+            if not curr_player or curr_player.user_id != ctx.author.id:
+                await ctx.reply(f"It is not your turn. Current turn: <@{curr_player.user_id}>" if curr_player else "No active turn.", ephemeral=True)
+                return
+
+            try:
+                result = game.play_procedure(
+                    user_id=ctx.author.id,
+                    card_name=card_name,
+                    target_category=target_cat,
+                )
+            except Exception as exc:
+                await ctx.reply(f"❌ {exc}", ephemeral=True)
+                return
 
         roll_embed = create_roll_embed(result)
         files = []
@@ -278,11 +279,19 @@ class GameCog(commands.Cog, name="Game"):
             except Exception:
                 pass
 
-        await ctx.reply(
-            f"🎲 {ctx.author.mention} played **{result.card.name}**!",
-            embed=roll_embed,
-            files=files,
-        )
+        try:
+            await ctx.reply(
+                f"🎲 {ctx.author.mention} played **{result.card.name}**!",
+                embed=roll_embed,
+                files=files,
+            )
+        except (discord.HTTPException, OSError) as exc:
+            logger.warning("Failed sending play_card message with files (%s), falling back to embed-only", exc)
+            roll_embed.set_thumbnail(url=None)
+            await ctx.reply(
+                f"🎲 {ctx.author.mention} played **{result.card.name}**!",
+                embed=roll_embed,
+            )
 
         # Announce victory or defeat
         if game.phase == GamePhase.VICTORY:
@@ -300,12 +309,19 @@ class GameCog(commands.Cog, name="Game"):
             await ctx.reply("No game in progress.", ephemeral=True)
             return
 
-        passed = game.pass_turn(ctx.author.id)
+        async with game.lock:
+            curr_player = game.get_current_player()
+            if not curr_player or curr_player.user_id != ctx.author.id:
+                await ctx.reply("It is not your turn to pass.", ephemeral=True)
+                return
+
+            passed = game.pass_turn(ctx.author.id)
+
         if passed:
             next_player = game.get_current_player()
             await ctx.reply(f"⏭️ {ctx.author.mention} passed. Next turn: <@{next_player.user_id}>")
         else:
-            await ctx.reply("It is not your turn to pass.", ephemeral=True)
+            await ctx.reply("Failed to pass turn.", ephemeral=True)
 
     @game_group.command(name="end", description="End the current incident response game.")
     async def end_game(self, ctx: commands.Context) -> None:
